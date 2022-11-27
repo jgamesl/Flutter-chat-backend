@@ -51,9 +51,10 @@ const crearUsuario = async (req, resp = response) => {
 const login = async (req, resp = response) => {
     const { email, password } = req.body;
     try {
-
         const usuario = new Usuario( req.body );
         const usuarioDB = await Usuario.findOne({ email });
+        console.log(usuario);
+        console.log(usuarioDB);
         if ( !usuarioDB ) {
             return resp.status(404).json({
                 ok: false,
@@ -76,7 +77,7 @@ const login = async (req, resp = response) => {
 
         resp.json({
             ok: true,
-            usuario,
+            usuario: usuarioDB,
             token
         });
     } catch ( error ) {
@@ -110,7 +111,7 @@ const renewToken = async (req, resp = response) => {
         resp.json({
             ok: true,
             usuario,
-            newToken,
+            token: newToken,
         })
         
 
